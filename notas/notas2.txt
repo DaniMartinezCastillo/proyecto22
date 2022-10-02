@@ -1,0 +1,4 @@
+
+
+tiene-[un,muchos] (asociación, composición)
+es-un (herencia)

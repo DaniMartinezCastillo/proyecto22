@@ -1,0 +1,18 @@
+Tipos de arquitecturas
+
+- En capas
+- Cliente-servidor
+- MVC
+- Microsevicios
+- Hexagonal
+
+
+Cliente-servidor + MVC + Capas
+
+Microservicios + Hexagonal
+
+------------------------
+
+Modularidad = reutilización + extensibilidad
+	= abstracción
+	--> consecuencias= mantenibilidad
