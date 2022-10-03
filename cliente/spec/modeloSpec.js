@@ -26,13 +26,13 @@ describe("Player", function() {
     expect(partida.codigo).toEqual(codigo);
   });
 
-  it("agregar jugador", function() {
+  xit("agregar jugador", function() {
     miJuego.unirseAPartida(codigo,usr2);
     expect(partida.jugadores.length).toEqual(2);
     expect(partida.jugadores[1].nick).toEqual(usr2.nick);
   });
 
-  it("unirse a partida", function() {
+  xit("unirse a partida", function() {
     miJuego.agregarUsuario("pepa");
     usr3=miJuego.usuarios["pepa"];
     expect(usr3.nick).toEqual("pepa");

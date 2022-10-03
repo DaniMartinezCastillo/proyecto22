@@ -69,3 +69,4 @@ function Partida(codigo, usr) {
 	this.agregarJugador(this.owner);
 }
 
+module.exports.Juego = Juego;
