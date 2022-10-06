@@ -41,12 +41,14 @@ function Juego() {
 		return res;
 	}
 	this.unirseAPartida = function (codigo, usr) {
+		let res=-1;
 		if (this.partidas[codigo]) {
-			this.partidas[codigo].agregarJugador(usr);
+			res = this.partidas[codigo].agregarJugador(usr);
 		}
 		else {
 			console.log("La partida no existe");
 		}
+		return res;
 	}
 	this.obtenerPartidas = function () {
 		let lista = [];
@@ -59,7 +61,7 @@ function Juego() {
 		//devolver solo las partidas sin completar
 		let lista = [];
 		for (let key in this.partidas) {
-			if (this.partidas[key].jugadores.length < this.partidas[key].maxJugadores) {
+			if (this.partidas[key].hayHueco()) {
 				lista.push({ "codigo": key, "owner": this.partidas[key].owner.nick });
 			}
 		}
@@ -85,13 +87,17 @@ function Partida(codigo, usr) {
 	this.fase = "inicial"; //new Inicial()
 	this.maxJugadores=2;
 	this.agregarJugador = function (usr) {
-		if (this.jugadores.length < this.maxJugadores) {
+		let res=this.codigo;
+		if (this.hayHueco()) {
 			this.jugadores.push(usr);
 			console.log("El usuario "+usr.nick+" se ha unido a la partida "+this.codigo);
+			this.comprobarFase();
 		}
 		else {
+			res=-1;
 			console.log("El usuario "+usr.nick+" NO se ha podido unir a la partida "+this.codigo+" porque está COMPLETA");
 		}
+		return res;
 	}
 	this.comprobarFase=function(){
 		if (!this.hayHueco()){

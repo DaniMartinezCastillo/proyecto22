@@ -24,8 +24,7 @@ app.get("/", function(request,response){
 
 app.get("/agregarUsuario/:nick",function(request,response){
   let nick = request.params.nick;
-  let res;
-  res=juego.agregarUsuario(nick);
+  let res=juego.agregarUsuario(nick);
   response.send(res);
 });
 
@@ -53,6 +52,6 @@ app.get("/obtenerPartidasDisponibles",function(request,response){
 });
 
 app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-  console.log('Press Ctrl+C to quit.');
+  console.log(`App está escuchando en el puerto ${PORT}`);
+  console.log('Ctrl+C para salir');
 });
