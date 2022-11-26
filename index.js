@@ -1,18 +1,19 @@
 const fs = require("fs");
 const express = require('express');
 const app = express();
+
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
 const modelo = require("./servidor/modelo.js");
+const sWS = require("./servidor/servidorWS.js");
 
 const PORT = process.env.PORT || 3000; // Start the server
 
 let juego = new modelo.Juego();
-
-// app.get('/', (req, res) => {
-//   res
-//     .status(200)
-//     .send("Hola")
-//     .end();
-// });
+let servidorWS=new sWS.ServidorWS();
 
 app.use(express.static(__dirname + "/"));
 
@@ -30,7 +31,7 @@ app.get("/agregarUsuario/:nick",function(request,response){
 
 app.get("/crearPartida/:nick",function(request,response){
   let nick = request.params.nick;
-  let res = juego.jugadorCrearPartida(nick);
+  let res = juego.jugadorCreaPartida(nick);
   response.send(res);
 });
 
@@ -51,7 +52,21 @@ app.get("/obtenerPartidasDisponibles",function(request,response){
   response.send(lista);
 });
 
-app.listen(PORT, () => {
+app.get("/salir/:nick",function(request,response){
+  let nick=request.params.nick;
+  juego.usuarioSale(nick);
+  response.send({res:"ok"})
+});
+
+//app.listen(PORT, () => {
+//  console.log(`App está escuchando en el puerto ${PORT}`);
+//  console.log('Ctrl+C para salir');
+//});
+
+server.listen(PORT, () => {
   console.log(`App está escuchando en el puerto ${PORT}`);
   console.log('Ctrl+C para salir');
 });
+
+//lanzar el servidorWs
+servidorWS.lanzarServidorWS(io,juego);
