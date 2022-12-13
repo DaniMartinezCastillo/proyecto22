@@ -4,7 +4,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Juego indefinido</title>
+	<title>Juego Batalla Naval</title>
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.6.1.min.js"
 		integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -38,29 +39,10 @@
 				<div id="listaPartidas"></div>
 			</div>
 		</div>
+		<div class="row" id="tablero">
 
-		<div class="row">
-			<div class="col-4">
-                <h2>Barcos</h2>
-			<ul class="fleet-roster">
-				<li id="patrolboat">Patrol Boat</li>
-				<li id="submarine">Submarine</li>
-				<li id="destroyer">Destroyer</li>
-				<li id="battleship">Battleship</li>
-				<li id="carrier">Aircraft Carrier</li>
-			</ul>
-			</div>
-			<div class="col-8">
-				<div class="grid-container">
-					<h2>Tu flota</h2>
-					<div class="grid human-player"></div>
-				</div>
-				<div class="grid-container">
-					<h2>Flota enemiga</h2>
-					<div class="grid computer-player"></div>
-				</div>
-			</div>
 		</div>
+	</div>
 		
 	<div class="modal" id="miModal">
 		<div class="modal-dialog">
@@ -78,13 +60,13 @@
 			</div>
 		</div>
 	</div>
+
 	<script>
 		rest = new ClienteRest();
 		iu = new ControlWeb();
 		cws = new ClienteWS();
-		//iu.mostrarAgregarUsuario();
+		tablero=new Tablero(10);
 		iu.comprobarCookie();
-		tablero=new Tablero();
 	</script>
 </body>
 </html>

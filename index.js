@@ -6,7 +6,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-
+var passport=require("passport");
 const modelo = require("./servidor/modelo.js");
 const sWS = require("./servidor/servidorWS.js");
 
@@ -24,9 +24,24 @@ app.get("/", function(request,response){
   response.send(contenido);
 });
 
+app.get("/auth/google",passport.authenticate('google', { scope: ['profile','email'] }));
+
+
+//ejemplo -> "/auth/github"
+
 app.get("/agregarUsuario/:nick",function(request,response){
   let nick = request.params.nick;
   let res=juego.agregarUsuario(nick);
+  response.send(res);
+});
+
+app.get("/comprobarUsuario/:nick",function(request,response){
+  let nick=request.params.nick;
+  let us=juego.obtenerUsuario(nick);
+  let res = { "nick": -1 };
+  if(us){
+    res.nick=us.nick;
+  }
   response.send(res);
 });
 
@@ -55,24 +70,19 @@ app.get("/obtenerPartidasDisponibles",function(request,response){
 
 app.get("/salir/:nick",function(request,response){
   let nick=request.params.nick;
-  juego.usuarioSale(nick);
-  response.send({res:"ok"})
+  cod=juego.usuarioSale(nick);
+  response.send({res:"ok",codigo:cod});
 });
 
 app.get("/obtenerLogs",function(request,response){
   juego.obtenerLogs(function(logs){
     response.send(logs);
-  })
+  });
 });
 
-//app.listen(PORT, () => {
-//  console.log(`App está escuchando en el puerto ${PORT}`);
-//  console.log('Ctrl+C para salir');
-//});
-
 server.listen(PORT, () => {
-  console.log(`App está escuchando en el puerto ${PORT}`);
-  console.log('Ctrl+C para salir');
+  console.log(`App escuchando en el puerto ${PORT}`);
+  console.log('Press Ctrl+C para salir.');
 });
 
 //lanzar el servidorWs

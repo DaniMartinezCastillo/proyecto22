@@ -2,19 +2,32 @@ var mongo=require("mongodb").MongoClient;
 var ObjectID=require("mongodb").ObjectID;
 
 function Cad(){
-    this.logs;
+    this.logs=undefined;
 
-    //logs
-    this.insertarLog=function(registroLog,callback){
-        insertar(this.logs,registroLog,callback);
+    this.insertarLog = function(log, callback){
+        insertar(this.logs,log,callback);
     }
 
-    this.obtenerLogs=function(callback){
-        obtenerTodos(this.logs,callback);
+    this.insertarPartida = function (partida, callback) {
+        insertar(this.partidas, partida, callback);
     }
 
-    function insertar(coleccion,elemento,callback){
-        coleccion.insertOne(elemento,function(err,result){
+    this.insertarUsuario = function (usuario, callback) {
+        insertar(this.usuarios, usuario, callback);
+    }
+
+    this.obtenerLogs = function(callback){
+        obtenerTodos(this.logs, callback);
+    }
+
+    this.obtenerTodos = function(coleccion, callback){
+        coleccion.find().toArray(function(error, col){
+            callback(col);
+        });
+    }
+
+    function insertar(coleccion, elemento, callback){
+        coleccion.insertOne(elemento, function(err, result){
             if(err){
                 console.log("error");
             }
@@ -25,36 +38,25 @@ function Cad(){
         });
     }
 
-    function obtenerTodos(coleccion,callback){
-        coleccion.find().toArray(function(error,col){
-            callback(col);
-        });
-    }
-
     this.conectar=function(){
         let cad = this;
         mongo.connect("mongodb+srv://admin:admin@cluster0.zqzreoh.mongodb.net/?retryWrites=true&w=majority",{ useUnifiedTopology: true },function(err,database){
             if (!err){
                 console.log("Conectado a MongoDB Atlas");
-                database.db("batalla").collection("logs",function(err,col){
-                    if (err){
-                        console.log("No se puede obtener la colección de logs");
-                    }
-                    else{
-                        console.log("Tenemos la coloección de logs");
-                        cad.logs=col;
-                    }
-                });
+                database.db("batalla").collection("logs",function(err,col){ });
+                if (err){
+                    console.log("No se puede conectar");
+                }
+                else{
+                    console.log("Tenemos la coloección de logs");
+                    cad.log=col;
+                }
             }
             else{
                 console.log("No se puedo conectar con MongoDB Atlas");
             }
         });
     }
-
-    //this.conectar();
-
-
 }
 
 module.exports.Cad = Cad;

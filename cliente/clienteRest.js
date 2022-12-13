@@ -20,13 +20,27 @@ function ClienteRest() {
 			}
 		});
 	}
+	this.comprobarUsuario = function () {
+        let cli = this;
+        $.getJSON("/comprobarUsuario/" + this.nick, function (data) {
+            if (data.nick != -1) {
+                console.log("Usuario " + data.nick + " activo")
+                cws.conectar();
+                iu.mostrarHome();
+            }
+            else {
+                console.log("No se ha podido registrar el usuario")
+                iu.mostrarAgregarUsuario();
+            }
+        });
+    }
 	this.crearPartida = function () {
 		let cli = this;
 		let nick = cli.nick;
 		$.getJSON("/crearPartida/" + nick, function (data) {
 			console.log(data);
 			if (data.codigo != -1) {
-				console.log("Usuario " + nick + " crea partida codigo: " + data.codigo)
+				console.log("Partida creada " + nick + " con codigo: " + data.codigo)
 				iu.mostrarCodigo(data.codigo);
 				//ws.nick=data.nick;
 				//$.cookie("nick",ws.nick);
@@ -75,9 +89,10 @@ function ClienteRest() {
 	}
 	this.usuarioSale = function () {
 		let nick = this.nick;
-		$.getJSON("/salir/" + nick, function () {
+		$.getJSON("/salir/" + nick, function (data) {
 			$.removeCookie("nick");
 			iu.comprobarCookie();
-		})
+			cws.usuarioSale(nick, data.codigo);
+		});
 	}
 }
