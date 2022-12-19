@@ -24,10 +24,38 @@ app.get("/", function(request,response){
   response.send(contenido);
 });
 
-app.get("/auth/google",passport.authenticate('google', { scope: ['profile','email'] }));
+//app.get("/auth/google",passport.authenticate('google', { scope: ['profile','email'] }));
 
 
 //ejemplo -> "/auth/github"
+
+app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/fallo' }), function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/good');
+});
+
+app.get("/good", function(request,response){
+  var nick=request.user.emails[0].value;
+  if (nick){
+    juego.agregarUsuario(nick);
+  }
+  response.cookie('nick',nick);
+  response.redirect('/');
+});
+
+app.get("/fallo",function(request,response){
+  response.send({nick:"nook"});
+});
+
+const cookieSession=require("cookie-session");
+
+app.use(cookieSession({
+  name: 'Batalla naval',
+  keys: ['key1', 'key2']
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.get("/agregarUsuario/:nick",function(request,response){
   let nick = request.params.nick;

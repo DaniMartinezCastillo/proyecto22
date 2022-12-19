@@ -12,3 +12,4 @@ Solución software con arquitectura Software as a Service (SaaS), de una aplicac
 - Tras estar llena la partida se puede iniciar.
 
 ## URL
+https://proyecto22-2ivjiwcgua-no.a.run.app

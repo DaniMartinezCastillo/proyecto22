@@ -139,8 +139,8 @@ function Usuario(nick, juego) {
 		this.tableroRival = new Tablero(dim);
 	}
 	this.inicializarFlota = function () {
-		this.flota["Barco Pequeño (1)"] = new Barco("Barco Pequeño (1)", 1);
-		this.flota["Carguero grande (3)"] = new Barco("Carguero grande (3)", 3);
+		this.flota["Barco tam 1 (1)"] = new Barco("Barco tam 1 (1)", 1);
+		this.flota["Barco tam 4 (4)"] = new Barco("Barco tam 4 (4)", 4);
 		// otros barcos: 1, 3, 5,...
 	}
 	this.colocarBarco = function (nombre, x, y) {
