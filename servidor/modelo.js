@@ -68,10 +68,17 @@ function Juego(test) {
 	this.unirseAPartida = function (codigo, usr) {
 		let res = -1;
 		if (this.partidas[codigo]) {
-			res = this.partidas[codigo].agregarJugador(usr);
-			this.insertarLog({ "operacion": "unirsePartida", "usuario": usr.nick, "codigoPartida": codigo, "fecha": Date() }, function () {
-				console.log("Registro de log(unirse a partida) insertado");
-			});
+			if (this.partidas[codigo].jugadores > 2) {
+				this.insertarLog({ "operacion": "errorUnirseAPartida", "usuario": usr.nick, "codigoPartida": codigo, "fecha": Date() }, function () {
+					console.log("Ya hay 2 jugadore en la partida");
+				});
+			}
+			else {
+				res = this.partidas[codigo].agregarJugador(usr);
+				this.insertarLog({ "operacion": "unirsePartida", "usuario": usr.nick, "codigoPartida": codigo, "fecha": Date() }, function () {
+					console.log("Registro de log(unirse a partida) insertado");
+				});
+			}
 		}
 		else {
 			console.log("La partida no existe");
@@ -139,9 +146,11 @@ function Usuario(nick, juego) {
 		this.tableroRival = new Tablero(dim);
 	}
 	this.inicializarFlota = function () {
-		this.flota["Barco tam 1 (1)"] = new Barco("Barco tam 1 (1)", 1);
-		this.flota["Barco tam 4 (4)"] = new Barco("Barco tam 4 (4)", 4);
-		// otros barcos: 1, 3, 5,...
+		this.flota["Bote 1 (1)"] = new Barco("Bote (1)", 1);
+		this.flota["Velero 2 (2)"] = new Barco("Velero 2 (2)", 2);
+		this.flota["Yate 3 (3)"] = new Barco("Yate 3 (3)", 3);
+		this.flota["Crucero 4 (4)"] = new Barco("Crucero 4 (4)", 4);
+		this.flota["Buque Carga 5 (5)"] = new Barco("Buque Carga 5 (5)", 5);
 	}
 	this.colocarBarco = function (nombre, x, y) {
 		if (this.partida.fase == "desplegando") {
@@ -368,8 +377,8 @@ function Tablero(size) {
 		if (x + tam > this.size) {
 			console.log('excede los limites');
 			return false;
-		} 
-		else { 
+		}
+		else {
 			return true;
 		}
 	}
