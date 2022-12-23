@@ -68,15 +68,15 @@ function Juego(test) {
 	this.unirseAPartida = function (codigo, usr) {
 		let res = -1;
 		if (this.partidas[codigo]) {
-			if (this.partidas[codigo].jugadores > 2) {
-				this.insertarLog({ "operacion": "errorUnirseAPartida", "usuario": usr.nick, "codigoPartida": codigo, "fecha": Date() }, function () {
-					console.log("Ya hay 2 jugadore en la partida");
-				});
-			}
-			else {
+			if (this.partidas[codigo].jugadores < 2) {
 				res = this.partidas[codigo].agregarJugador(usr);
 				this.insertarLog({ "operacion": "unirsePartida", "usuario": usr.nick, "codigoPartida": codigo, "fecha": Date() }, function () {
 					console.log("Registro de log(unirse a partida) insertado");
+				});
+			}
+			else {
+				this.insertarLog({ "operacion": "errorUnirseAPartida", "usuario": usr.nick, "codigoPartida": codigo, "fecha": Date() }, function () {
+					console.log("Ya hay 2 jugadore en la partida");
 				});
 			}
 		}
