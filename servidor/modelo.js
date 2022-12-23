@@ -75,7 +75,7 @@ function Juego(test) {
 				});
 			}
 			else {
-				this.insertarLog({ "operacion": "errorUnirseAPartida", "usuario": usr.nick, "codigoPartida": codigo, "fecha": Date() }, function () {
+				this.insertarLog({ "operacion": "errorUnirseAPartida", "codigoPartida": codigo, "fecha": Date() }, function () {
 					console.log("Ya hay 2 jugadore en la partida");
 				});
 			}
