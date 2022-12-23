@@ -139,11 +139,16 @@ function Usuario(nick, juego) {
 		this.tableroRival = new Tablero(dim);
 	}
 	this.inicializarFlota = function () {
-		this.flota["Bote (1)"] = new Barco("Bote (1)", 1);
-		this.flota["Velero (2)"] = new Barco("Velero (2)", 2);
-		this.flota["Yate (3)"] = new Barco("Yate (3)", 3);
-		this.flota["Crucero (4)"] = new Barco("Crucero (4)", 4);
-		this.flota["Buque Carga (5)"] = new Barco("Buque Carga (5)", 5);
+		this.flota["Submarino 1 (1)"] = new Barco("Submarino 1 (1)", 1);
+		this.flota["Submarino 2 (1)"] = new Barco("Submarino 2 (1)", 1);
+		this.flota["Submarino 3 (1)"] = new Barco("Submarino 3 (1)", 1);
+		this.flota["Submarino 4 (1)"] = new Barco("Submarino 4 (1)", 1);
+		this.flota["Destructor 1 (2)"] = new Barco("Destructor 1 (2)", 2);
+		this.flota["Destructor 2 (2)"] = new Barco("Destructor 2 (2)", 2);
+		this.flota["Destructor 3 (2)"] = new Barco("Destructor 3 (2)", 2);
+		this.flota["Crucero 1 (3)"] = new Barco("Crucero 1 (3)", 3);
+		this.flota["Crucero 2 (3)"] = new Barco("Crucero 2 (3)", 3);
+		this.flota["Acorazado (4)"] = new Barco("Acorazado (4)", 4);
 	}
 	this.colocarBarco = function (nombre, x, y) {
 		if (this.partida.fase == "desplegando") {
@@ -446,6 +451,18 @@ function Agua() {
 
 function Inicial() {
 	this.nombre = "inicial";
+}
+
+function Desplegando() {
+	this.nombre = "desplegando";
+}
+
+function Final() {
+	this.nombre = "final";
+}
+
+function Jugando() {
+	this.nombre = "jugando";
 }
 
 module.exports.Juego = Juego;
