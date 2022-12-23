@@ -38,11 +38,6 @@ function ServidorWS() {
                     cli.enviarATodosEnPartida(io,codigoStr,"faseDesplegando",res);
                 }
             });
-            socket.on("errorUnirseAPartida", function (codigo) {
-                let codigoStr = codigo.toString();
-                socket.join(codigoStr);
-                cli.enviarAlRemitente(socket, "errorUnidoAPartida", 2);
-            });
             socket.on("usuarioSale",function(nick, codigo){
                 let lista = juego.obtenerPartidasDisponibles();
                 res= {jugadorS:nick} 

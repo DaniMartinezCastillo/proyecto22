@@ -53,15 +53,6 @@ function ClienteWS() {
                 console.log("No se ha podido unir a partida");
             }
         });
-        this.socket.on("errorUnidoAPartida", function (data) {
-            if (data.codigo != -1) {
-                console.log("No se puede unir a la partida porque ya hay 2 jugadores.");
-                iu.mostrarModal("No se puede unir a la partida porque ya hay 2 jugadores.");
-            }
-            else {
-                console.log("Se ha podido unir a partida");
-            }
-        });
         this.socket.on("actualizarListaPartidas", function (lista) {
             if (!cli.codigo) {
                 iu.mostrarListaDePartidasDisponibles(lista);
