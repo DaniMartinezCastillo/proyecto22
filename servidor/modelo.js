@@ -137,16 +137,16 @@ function Usuario(nick, juego) {
 		this.tableroRival = new Tablero(dim);
 	}
 	this.inicializarFlota = function () {
-		this.flota["Submarino 1 (1)"] = new Barco("Submarino 1 (1)", 1);
-		this.flota["Submarino 2 (1)"] = new Barco("Submarino 2 (1)", 1);
-		this.flota["Submarino 3 (1)"] = new Barco("Submarino 3 (1)", 1);
-		this.flota["Submarino 4 (1)"] = new Barco("Submarino 4 (1)", 1);
-		this.flota["Destructor 1 (2)"] = new Barco("Destructor 1 (2)", 2);
-		this.flota["Destructor 2 (2)"] = new Barco("Destructor 2 (2)", 2);
-		this.flota["Destructor 3 (2)"] = new Barco("Destructor 3 (2)", 2);
-		this.flota["Crucero 1 (3)"] = new Barco("Crucero 1 (3)", 3);
-		this.flota["Crucero 2 (3)"] = new Barco("Crucero 2 (3)", 3);
-		this.flota["Acorazado (4)"] = new Barco("Acorazado (4)", 4);
+		this.flota["Submarino(1)"] = new Barco("Submarino(1)", 1, new Horizontal());
+		this.flota["Submarino(1)"] = new Barco("Submarino(1)", 1, new Horizontal());
+		this.flota["Submarino(1)"] = new Barco("Submarino(1)", 1, new Vertical());
+		this.flota["Submarino(1)"] = new Barco("Submarino(1)", 1, new Vertical());
+		this.flota["Destructor Horizontal(2)"] = new Barco("Destructor Horizontal(2)", 2, new Horizontal());
+		this.flota["Destructor Vertical(2)"] = new Barco("Destructor Vertical(2)", 2, new Vertical());
+		this.flota["Crucero Horizontal(3)"] = new Barco("Crucero Horizontal(3)", 3, new Horizontal());
+		this.flota["Crucero Vertical(3)"] = new Barco("Crucero Vertical(3)", 3, new Vertical());
+		this.flota["Acorazado Horizontal(4)"] = new Barco("Acorazado Horizontal(4)", 4, new Horizontal());
+		this.flota["Acorazado Vertical(4)"] = new Barco("Acorazado Vertical(4)", 4, new Vertical());
 	}
 	this.colocarBarco = function (nombre, x, y) {
 		if (this.partida.fase == "desplegando") {
