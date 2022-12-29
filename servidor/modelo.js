@@ -462,7 +462,7 @@ function Horizontal() {
 	}
 	this.comprobarCasillas = function (barco, tablero) {
 		for (i = barco.x; i < barco.tam + barco.x; i++) {
-			if (tablero.casillas[i][barco.y].contiene == barco && tablero.casillas[i][barco.y].contiene == "intacto") {
+			if (tablero.casillas[i][barco.y].estado == "intacto") {
 				return false;
 			}
 		}
@@ -487,7 +487,7 @@ function Vertical() {
 	}
 	this.comprobarCasillas = function (barco, tablero) {
 		for (i = barco.y; i < barco.tam + barco.y; i++) {
-			if (tablero.casillas[barco.x][i].contiene == barco && tablero.casillas[barco.x][i].estado == "intacto") {
+			if (tablero.casillas[barco.x][i].estado == "intacto") {
 				return false;
 			}
 		}
