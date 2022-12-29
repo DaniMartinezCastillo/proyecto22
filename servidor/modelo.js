@@ -422,7 +422,6 @@ function Barco(nombre, tam, orientacion) {
 	this.meDisparan = function (tablero, x, y) {
 		this.estado = "tocado";
 		tablero.marcarEstado(this.estado, x, y);
-		tablero.ponerAgua(x, y);
 		console.log("Tocado");
 		if (this.comprobar(tablero)) {
 			this.estado = "hundido";
