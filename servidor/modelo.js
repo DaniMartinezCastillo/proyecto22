@@ -359,19 +359,26 @@ function Tablero(size) {
 	this.colocarBarco = function (barco, x, y) {
 		barco.colocar(this,x,y);
 	}
+	this.comprobarLimites = function (tam, num) {
+		if (num + tam > this.size) {
+			console.log('excede los limites');
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 	this.casillasLibresH = function (x, y, tam) {
-		for (i = x; i < tam; i++) {
-			let contiene = this.casillas[i][y].estado;
-			if (contiene != "agua") {
+		for (i = x; i < tam + x; i++) {
+			if (!this.casillas[x][i].contiene.esAgua()) {
 				return false;
 			}
 		}
 		return true;
 	}
 	this.casillasLibresV = function (x, y, tam) {
-		for (i = y; i < tam; i++) {
-			let contiene = this.casillas[x][i].estado;
-			if (contiene != "agua") {
+		for (i = y; i < tam + y; i++) {
+			if (!this.casillas[x][i].contiene.esAgua()) {
 				return false;
 			}
 		}
@@ -387,7 +394,8 @@ function Tablero(size) {
 		this.casillas[x][y].estado = estado;
 	}
 	this.ponerAgua = function (x, y) {
-		return this.casillas[x][y].contiene = new Agua();
+		this.casillas[x][y].contiene = new Agua();
+		this.casillas[x][y].estado = this.casillas[x][y].contiene.obtenerEstado();
 	}
 	this.crearTablero(size);
 }
@@ -414,8 +422,9 @@ function Barco(nombre, tam, orientacion) {
 	this.meDisparan = function (tablero, x, y) {
 		this.estado = "tocado";
 		tablero.marcarEstado(this.estado, x, y);
+		tablero.ponerAgua(x, y);
 		console.log("Tocado");
-		if (this.comprobarCasillas(tablero)) {
+		if (this.comprobar(tablero)) {
 			this.estado = "hundido";
 			tablero.marcarEstado(this.estado, x, y);
 			console.log("Hundido");
@@ -432,7 +441,7 @@ function Barco(nombre, tam, orientacion) {
 	this.obtenerEstado = function () {
 		return this.estado;
 	}
-	this.comprobarCasillas = function () {
+	this.comprobar = function (tablero) {
 		this.orientacion.comprobarCasillas(this, tablero);
 	}
 }
@@ -440,7 +449,7 @@ function Barco(nombre, tam, orientacion) {
 function Horizontal() {
 	this.nombre = "horizontal";
 	this.colocarBarco = function (barco, tablero, x, y) {
-		if (this.comprobarLimites(tablero, barco.tam, x)) {
+		if (this.comprobarLimites(barco.tam, x)) {
 			if (tablero.casillasLibresH(x, y, barco.tam)) {
 				for (let i = x; i < barco.tam + x; i++) {
 					tablero.casillas[i][y].contiene = barco;
@@ -450,15 +459,6 @@ function Horizontal() {
 				barco.posicion(x, y);
 				barco.desplegado = true;
 			}
-		}
-	}
-	this.comprobarLimites = function (tablero, tam, x) {
-		if (x + tam > tablero.size) {
-			console.log('excede los limites');
-			return false;
-		}
-		else {
-			return true;
 		}
 	}
 	this.comprobarCasillas = function (barco, tablero) {
