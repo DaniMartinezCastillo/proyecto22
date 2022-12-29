@@ -449,7 +449,7 @@ function Barco(nombre, tam, orientacion) {
 function Horizontal() {
 	this.nombre = "horizontal";
 	this.colocarBarco = function (barco, tablero, x, y) {
-		if (this.comprobarLimites(barco.tam, x)) {
+		if (tablero.comprobarLimites(barco.tam, x)) {
 			if (tablero.casillasLibresH(x, y, barco.tam)) {
 				for (let i = x; i < barco.tam + x; i++) {
 					tablero.casillas[i][y].contiene = barco;
