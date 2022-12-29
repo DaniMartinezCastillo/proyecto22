@@ -388,14 +388,14 @@ function Tablero(size) {
 		return this.casillas[x][y].contiene.meDisparan(this, x, y);
 	}
 	this.obtenerEstado = function (x, y) {
-		return this.casillas[x][y].contiene.obtenerEstado();
+		return this.casillas[x][y].obtenerEstado();
 	}
 	this.marcarEstado = function (estado, x, y) {
 		this.casillas[x][y].estado = estado;
 	}
 	this.ponerAgua = function (x, y) {
 		this.casillas[x][y].contiene = new Agua();
-		this.casillas[x][y].estado = this.casillas[x][y].contiene.obtenerEstado();
+		this.casillas[x][y].estado = this.casillas[x][y].obtenerEstado();
 	}
 	this.crearTablero(size);
 }
@@ -404,7 +404,10 @@ function Casilla(x, y) {
 	this.x = x;
 	this.y = y;
 	this.contiene = new Agua();
-	this.estado = this.contiene.obtenerEstado();
+	this.estado = "agua";
+	this.obtenerEstado = function (){
+		return this.contiene.obtenerEstado();
+	}
 }
 
 function Barco(nombre, tam, orientacion) {
@@ -441,7 +444,7 @@ function Barco(nombre, tam, orientacion) {
 		return this.estado;
 	}
 	this.comprobar = function (tablero) {
-		this.orientacion.comprobarCasillas(this, tablero);
+		return this.orientacion.comprobarCasillas(this, tablero);
 	}
 }
 
