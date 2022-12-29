@@ -17,8 +17,8 @@ function ClienteWS() {
     this.abandonarPartida = function () {
         this.socket.emit("abandonarPartida", rest.nick, cws.codigo);
     }
-    this.colocarBarco=function(nombre,x,y){ //let data={"nick":rest.nick,"nombre":nombre,"x":x,"y":y}
-        this.socket.emit("colocarBarco",rest.nick, nombre, x, y);
+    this.colocarBarco = function (nombre, x, y) { //let data={"nick":rest.nick,"nombre":nombre,"x":x,"y":y}
+        this.socket.emit("colocarBarco", rest.nick, nombre, x, y);
     }
     this.barcosDesplegados = function () {
         this.socket.emit("barcosDesplegados", rest.nick);
@@ -47,7 +47,6 @@ function ClienteWS() {
         this.socket.on("unidoAPartida", function (data) {
             if (data.codigo != -1) {
                 console.log("Usuario " + rest.nick + " se une a la partida con codigo: " + data.codigo);
-                iu.mostrarModal("Barco: "+data.barco+" colocado");
             }
             else {
                 console.log("No se ha podido unir a partida");
@@ -60,40 +59,54 @@ function ClienteWS() {
         });
         this.socket.on("partidaAbandonada", function (data) {
             if (data.codigo != -1) {
-                console.log(data.nombreA + " ha abandonado la partida con codigo: " + data.codigoP + "\n" + " Ha ganado " + data.nombreG);
-                iu.mostrarHome();
-                iu.mostrarModal(data.nombreA + " ha abandonado la partida con codigo: " + data.codigoP + "\n" + " Ha ganado " + data.nombreG);
+                if (!(res.nombreA == rest.nick)) {
+                    console.log("El usuario " + res.nombreA + " ha abandonado la partida" + "\n" + " Has ganado la partida");
+                    iu.mostrarModal("El usuario " + res.nombreA + " ha abandonado la partida" + "\n" + " Has ganado la partida");
+                    iu.mostrarHome();
+                }
+                else {
+                    iu.mostrarModal("Has abandonado la partida" + "\n" + " Has perdido la partida");
+                }
             }
             else {
-                console.log("No se ha podido abandonar la partida");
-                iu.mostrarModal(data.nombreA + " ha intentado abandonar la partida pero no ha podido");
+                console.log("Has intentado abandonar la partida pero no se ha podido");
+                iu.mostrarModal("Has intentado abandonar la partida pero no se ha podido");
             }
+
         });
         this.socket.on("partidaCancelada", function (res) {
-            iu.mostrarModal("Has terminado la partida " + res.codigoP + " antes de que se uniese alguien");
-            iu.mostrarHome();
+            if (res.codigo != -1) {
+                console.log("Has terminado la partida " + res.codigoP + " antes de que se uniese alguien");
+                iu.mostrarModal("Has terminado la partida " + res.codigoP + " antes de que se uniese alguien");
+                iu.mostrarHome();
+            }
+            else {
+                console.log("Has intentado abandonar la partida pero no se ha podido");
+                iu.mostrarModal("Has intentado abandonar la partida pero no se ha podido");
+            }
         });
         this.socket.on("usuarioSalido", function (res) {
             if (!(res.jugadorS == rest.nick)) {
-                iu.mostrarModal("El usuario " + res.jugadorS + " se ha salido a mitad de la partida");
+                console.log("El usuario " + res.jugadorS + " se ha salido del juego a mitad de la partida" + "\n" + " Has ganado la partida");
+                iu.mostrarModal("El usuario " + res.jugadorS + " se ha salido del juego a mitad de la partida" + "\n" + " Has ganado la partida");
                 iu.mostrarHome();
             }
             else {
-                iu.mostrarModal("Te has salido a mitad de partida");
+                iu.mostrarModal("Te has salido del juego a mitad de partida" + "\n" + " Has perdido la partida");
             }
         });
         this.socket.on("aJugar", function () {
             iu.mostrarModal("A jugaaar!");
         });
-        this.socket.on("barcoColocado",function(data){
+        this.socket.on("barcoColocado", function (data) {
             console.log(data.colocado.desplegado);
-            if (data.colocado.desplegado){
+            if (data.colocado.desplegado) {
                 let barco = tablero.flota[data.barco];
-                tablero.puedesColocarBarco(barco, data.x, data.y);
-                iu.mostrarModal("Barco: "+data.barco+" colocado");
+                tablero.puedesColocarBarco(barco, data.x, data.y, barco.orientacion.nombre);
+                iu.mostrarModal("Barco: " + data.barco + " colocado");
                 cli.barcosDesplegados();
             }
-            else{
+            else {
                 iu.mostrarModal("No se puede colocar barco");
             }
         });
