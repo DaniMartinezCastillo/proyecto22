@@ -357,7 +357,7 @@ function Tablero(size) {
 		}
 	}
 	this.colocarBarco = function (barco, x, y) {
-		barco.colocar(this,x,y);
+		barco.colocar(this, x, y);
 	}
 	this.comprobarLimites = function (tam, num) {
 		if (num + tam > this.size) {
