@@ -90,15 +90,21 @@ function ClienteWS() {
             }
         });
         this.socket.on("usuarioSalido", function (res) {
-            if (!(res.jugadorS == rest.nick)) {
-                console.log("El usuario " + res.jugadorS + " se ha salido del juego a mitad de la partida" + "\n" + " Has ganado la partida");
-                iu.mostrarHome();
-                iu.mostrarModal("El usuario " + res.jugadorS + " se ha salido del juego a mitad de la partida" + "\n" + " Has ganado la partida");
+            if (res.codigoP != -1) {
+                if (!(res.jugadorS == rest.nick)) {
+                    console.log("El usuario " + res.jugadorS + " se ha salido del juego a mitad de la partida" + "\n" + " Has ganado la partida");
+                    iu.mostrarHome();
+                    iu.mostrarModal("El usuario " + res.jugadorS + " se ha salido del juego a mitad de la partida" + "\n" + " Has ganado la partida");
+                }
+                else {
+                    console.log("Te has salido del juego a mitad de la partida" + "\n" + " Has perdido la partida");
+                    iu.mostrarHome();
+                    iu.mostrarModal("Te has salido del juego a mitad de la partida" + "\n" + " Has perdido la partida");
+                }
             }
             else {
-                console.log("Te has salido del juego a mitad de la partida" + "\n" + " Has perdido la partida");
-                iu.mostrarHome();
-                iu.mostrarModal("Te has salido del juego a mitad de la partida" + "\n" + " Has perdido la partida");
+                console.log("Has intentado salir de la partida pero no se ha podido");
+                iu.mostrarModal("Has intentado salir de la partida pero no se ha podido");
             }
         });
         this.socket.on("aJugar", function () {
@@ -138,8 +144,16 @@ function ClienteWS() {
             console.log("Ya puedes desplegar la flota");
         });
         this.socket.on("finalPartida", function (res) {
-            iu.mostrarModal('Victoriaa! ' + res + ' ha ganado la partida!!');
-            iu.finalPartida();
+            if (!(res == rest.nick)) {
+                console.log("Has perdido:( "+ "\n" + "Buen intento, pero "+res+" ha ganado la partida, suerte la próxima vez");
+                iu.mostrarModal("Has perdido:( "+ "\n" + "Buen intento, pero "+res+" ha ganado la partida, suerte la próxima vez");
+                iu.finalPartida();
+            }
+            else {
+                console.log("VICTORIAA!!! " + "\n" + " Has ganado la partida!!");
+                iu.mostrarModal("VICTORIAA!!! " + "\n" + " Has ganado la partida!!");
+                iu.finalPartida();
+            }
         });
     }
 }

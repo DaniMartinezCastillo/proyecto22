@@ -39,7 +39,7 @@ function ServidorWS() {
             });
             socket.on("usuarioSale",function(nick, codigo){
                 let lista = juego.obtenerPartidasDisponibles();
-                res= {jugadorS:nick} 
+                res= {jugadorS:nick, codigoP: codigo} 
                 if(codigo){
                     let codigoStr =codigo.toString();              
                     cli.enviarATodosEnPartida(io, codigoStr, "usuarioSalido", res);
