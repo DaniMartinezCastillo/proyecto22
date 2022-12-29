@@ -453,7 +453,7 @@ function Horizontal() {
 			if (tablero.casillasLibresH(x, y, barco.tam)) {
 				for (let i = x; i < barco.tam + x; i++) {
 					tablero.casillas[i][y].contiene = barco;
-					tablero.marcarEstado(barco.estado, i, barco.y);
+					tablero.marcarEstado("intacto", i, y);
 					console.log('Barco ', barco.nombre, ' colocado en ', i, y);
 				}
 				barco.posicion(x, y);
@@ -478,7 +478,7 @@ function Vertical() {
 			if (tablero.casillasLibresV(x, y, barco.tam)) {
 				for (let i = y; i < barco.tam + y; i++) {
 					tablero.casillas[x][i].contiene = barco;
-					tablero.marcarEstado(barco.estado, barco.x, i);
+					tablero.marcarEstado("intacto", x, i);
 					console.log('Barco ', barco.nombre, ' colocado en ', x, i);
 				}
 				barco.posicion(x, y);
