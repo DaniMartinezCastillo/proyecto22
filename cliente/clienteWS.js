@@ -59,12 +59,13 @@ function ClienteWS() {
         });
         this.socket.on("partidaAbandonada", function (data) {
             if (data.codigo != -1) {
-                if (!(res.nombreA == rest.nick)) {
-                    console.log("El usuario " + res.nombreA + " ha abandonado la partida" + "\n" + " Has ganado la partida");
-                    iu.mostrarModal("El usuario " + res.nombreA + " ha abandonado la partida" + "\n" + " Has ganado la partida");
+                if (!(data.nombreA == rest.nick)) {
+                    console.log("El usuario " + data.nombreA + " ha abandonado la partida" + "\n" + " Has ganado la partida");
                     iu.mostrarHome();
+                    iu.mostrarModal("El usuario " + data.nombreA + " ha abandonado la partida" + "\n" + " Has ganado la partida");
                 }
                 else {
+                    console.log("Has abandonado la partida" + "\n" + " Has perdido la partida");
                     iu.mostrarModal("Has abandonado la partida" + "\n" + " Has perdido la partida");
                 }
             }
@@ -76,9 +77,9 @@ function ClienteWS() {
         });
         this.socket.on("partidaCancelada", function (res) {
             if (res.codigo != -1) {
-                console.log("Has terminado la partida " + res.codigoP + " antes de que se uniese alguien");
-                iu.mostrarModal("Has terminado la partida " + res.codigoP + " antes de que se uniese alguien");
+                console.log("Has terminado la partida antes de que se uniese alguien");
                 iu.mostrarHome();
+                iu.mostrarModal("Has terminado la partida antes de que se uniese alguien");
             }
             else {
                 console.log("Has intentado abandonar la partida pero no se ha podido");
@@ -88,11 +89,12 @@ function ClienteWS() {
         this.socket.on("usuarioSalido", function (res) {
             if (!(res.jugadorS == rest.nick)) {
                 console.log("El usuario " + res.jugadorS + " se ha salido del juego a mitad de la partida" + "\n" + " Has ganado la partida");
-                iu.mostrarModal("El usuario " + res.jugadorS + " se ha salido del juego a mitad de la partida" + "\n" + " Has ganado la partida");
                 iu.mostrarHome();
+                iu.mostrarModal("El usuario " + res.jugadorS + " se ha salido del juego a mitad de la partida" + "\n" + " Has ganado la partida");
             }
             else {
-                iu.mostrarModal("Te has salido del juego a mitad de partida" + "\n" + " Has perdido la partida");
+                console.log("Te has salido del juego a mitad de la partida" + "\n" + " Has perdido la partida");
+                iu.mostrarModal("Te has salido del juego a mitad de la partida" + "\n" + " Has perdido la partida");
             }
         });
         this.socket.on("aJugar", function () {
