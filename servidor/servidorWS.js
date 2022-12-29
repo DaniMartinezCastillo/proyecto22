@@ -19,7 +19,6 @@ function ServidorWS() {
                 let res = juego.jugadorCreaPartida(nick);
                 let codigoStr = res.codigo.toString();
                 socket.join(codigoStr);
-                //cli.enviarAlRemitente(socket,"partidaCreada",res);
                 cli.enviarATodosEnPartida(io, codigoStr, "partidaCreada", res);
                 let lista = juego.obtenerPartidasDisponibles();
                 cli.enviarATodos(socket, "actualizarListaPartidas", lista);
@@ -55,7 +54,8 @@ function ServidorWS() {
                 if (jugador && partida) {
                     let rival = partida.obtenerRival(nick);
                     if (rival == undefined){
-                        cli.enviarAlRemitente(socket, "partidaCancelada", {codigoP: codigo});
+                        let res = {codigoP: codigo} 
+                        cli.enviarAlRemitente(socket, "partidaCancelada", res);
                         partida.abandonarPartida(jugador);
                         let lista = juego.obtenerPartidasDisponibles();
                         cli.enviarATodos(socket, "actualizarListaPartidas", lista);

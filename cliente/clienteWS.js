@@ -17,7 +17,7 @@ function ClienteWS() {
     this.abandonarPartida = function () {
         this.socket.emit("abandonarPartida", rest.nick, cws.codigo);
     }
-    this.colocarBarco = function (nombre, x, y) { //let data={"nick":rest.nick,"nombre":nombre,"x":x,"y":y}
+    this.colocarBarco = function (nombre, x, y) {
         this.socket.emit("colocarBarco", rest.nick, nombre, x, y);
     }
     this.barcosDesplegados = function () {
@@ -47,6 +47,8 @@ function ClienteWS() {
         this.socket.on("unidoAPartida", function (data) {
             if (data.codigo != -1) {
                 console.log("Usuario " + rest.nick + " se une a la partida con codigo: " + data.codigo);
+                iu.mostrarCodigo(data.codigo);
+                cli.codigo = data.codigo;
             }
             else {
                 console.log("No se ha podido unir a partida");
@@ -66,6 +68,7 @@ function ClienteWS() {
                 }
                 else {
                     console.log("Has abandonado la partida" + "\n" + " Has perdido la partida");
+                    iu.mostrarHome();
                     iu.mostrarModal("Has abandonado la partida" + "\n" + " Has perdido la partida");
                 }
             }
@@ -76,7 +79,7 @@ function ClienteWS() {
 
         });
         this.socket.on("partidaCancelada", function (res) {
-            if (res.codigo != -1) {
+            if (res.codigoP != -1) {
                 console.log("Has terminado la partida antes de que se uniese alguien");
                 iu.mostrarHome();
                 iu.mostrarModal("Has terminado la partida antes de que se uniese alguien");
@@ -94,6 +97,7 @@ function ClienteWS() {
             }
             else {
                 console.log("Te has salido del juego a mitad de la partida" + "\n" + " Has perdido la partida");
+                iu.mostrarHome();
                 iu.mostrarModal("Te has salido del juego a mitad de la partida" + "\n" + " Has perdido la partida");
             }
         });
