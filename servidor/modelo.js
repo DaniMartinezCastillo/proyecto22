@@ -368,22 +368,6 @@ function Tablero(size) {
 			return true;
 		}
 	}
-	this.casillasLibresH = function (x, y, tam) {
-		for (i = x; i < tam + x; i++) {
-			if (!this.casillas[x][i].contiene.esAgua()) {
-				return false;
-			}
-		}
-		return true;
-	}
-	this.casillasLibresV = function (x, y, tam) {
-		for (i = y; i < tam + y; i++) {
-			if (!this.casillas[x][i].contiene.esAgua()) {
-				return false;
-			}
-		}
-		return true;
-	}
 	this.meDisparan = function (x, y) {
 		return this.casillas[x][y].contiene.meDisparan(this, x, y);
 	}
@@ -452,7 +436,7 @@ function Horizontal() {
 	this.nombre = "horizontal";
 	this.colocarBarco = function (barco, tablero, x, y) {
 		if (tablero.comprobarLimites(barco.tam, x)) {
-			if (tablero.casillasLibresH(x, y, barco.tam)) {
+			if (this.casillasLibres(tablero.casillas, x, y, barco.tam)) {
 				for (let i = x; i < barco.tam + x; i++) {
 					tablero.casillas[i][y].contiene = barco;
 					tablero.marcarEstado("intacto", i, y);
@@ -462,6 +446,14 @@ function Horizontal() {
 				barco.desplegado = true;
 			}
 		}
+	}
+	this.casillasLibres = function (casillas, x, y, tam) {
+		for (i = x; i < tam + x; i++) {
+			if (!casillas[i][y].contiene.esAgua()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	this.comprobarCasillas = function (barco, tablero) {
 		for (i = barco.x; i < barco.tam + barco.x; i++) {
@@ -477,7 +469,7 @@ function Vertical() {
 	this.nombre = "vertical"
 	this.colocarBarco = function (barco, tablero, x, y) {
 		if (tablero.comprobarLimites(barco.tam, y)) {
-			if (tablero.casillasLibresV(x, y, barco.tam)) {
+			if (this.casillasLibres(tablero.casillas, x, y, barco.tam)) {
 				for (let i = y; i < barco.tam + y; i++) {
 					tablero.casillas[x][i].contiene = barco;
 					tablero.marcarEstado("intacto", x, i);
@@ -487,6 +479,14 @@ function Vertical() {
 				barco.desplegado = true;
 			}
 		}
+	}
+	this.casillasLibres = function (casillas, x, y, tam) {
+		for (i = y; i < tam + y; i++) {
+			if (!casillas[x][i].contiene.esAgua()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	this.comprobarCasillas = function (barco, tablero) {
 		for (i = barco.y; i < barco.tam + barco.y; i++) {

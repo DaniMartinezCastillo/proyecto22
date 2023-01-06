@@ -13,9 +13,9 @@ passport.deserializeUser(function(user, done) {
 });
 
 passport.use(new GoogleStrategy({
-    clientID:"455903968700-bo2cug7jke03u8qn66poe1453v4ip8sd.apps.googleusercontent.com",
-    clientSecret:"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",
-    callbackURL:"http://localhost:3000/google/callback"
+    clientID:"315556153013-q20nogk2esdv4o2u7ecap6lobmdjtpnd.apps.googleusercontent.com",
+    clientSecret:"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",
+    callbackURL:"https://proyecto22-2ivjiwcgua-no.a.run.app"
   },
   function(accessToken, refreshToken, profile, done) {
     //User.findOrCreate({ googleId: profile.id }, function (err, user) {
