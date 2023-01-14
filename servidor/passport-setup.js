@@ -16,7 +16,7 @@ passport.use(new GoogleStrategy({
     clientID:"242755984477-nmm3339g1tio4a97ik76jc2vjn9aqrtd.apps.googleusercontent.com",
     clientSecret:"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",
     //callbackURL: "http://localhost:3000/google/callback"
-    callbackURL:"https://proyecto22-2ivjiwcgua-no.a.run.app/google/callback"
+    callbackURL:"https://proyecto22-3ru5xmyj3a-no.a.run.app/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     //User.findOrCreate({ googleId: profile.id }, function (err, user) {
