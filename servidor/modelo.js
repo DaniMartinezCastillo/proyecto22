@@ -125,7 +125,7 @@ function Usuario(nick, juego) {
 	this.tableroPropio;
 	this.tableroRival;
 	this.partida;
-	this.flota = {}; //podría ser array []
+	this.flota = {};
 	this.crearPartida = function () {
 		return this.juego.crearPartida(this);
 	}
@@ -408,6 +408,7 @@ function Barco(nombre, tam, orientacion) {
 	}
 	this.meDisparan = function (tablero, x, y) {
 		this.estado = "tocado";
+		this.disparos++;
 		tablero.marcarEstado(this.estado, x, y);
 		console.log("Tocado");
 		if (this.comprobar(tablero)) {
