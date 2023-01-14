@@ -12,4 +12,4 @@ Este repositorio contiene la arquitectura base de una solución software estilo 
 - Una vez que la partida esté llena los dos usuarios podrán desplegar todos los barcos. Cuando todos los barcos de los dos jugadores estén desplegados se iniciará la partida.
 
 ## URL
-https://proyecto22-2ivjiwcgua-no.a.run.app
+https://proyecto22-3ru5xmyj3a-no.a.run.app
