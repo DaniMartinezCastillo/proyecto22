@@ -108,7 +108,7 @@ function ClienteWS() {
             }
         });
         this.socket.on("aJugar", function () {
-            iu.mostrarModal("A jugaaar!");
+            iu.mostrarModal("Empieza a disparar!");
         });
         this.socket.on("barcoColocado", function (data) {
             console.log(data.colocado.desplegado);

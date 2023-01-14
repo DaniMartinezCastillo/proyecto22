@@ -379,7 +379,6 @@ function Tablero(size) {
 	}
 	this.ponerAgua = function (x, y) {
 		this.casillas[x][y].contiene = new Agua();
-		this.casillas[x][y].estado = this.casillas[x][y].obtenerEstado();
 	}
 	this.crearTablero(size);
 }
@@ -410,6 +409,7 @@ function Barco(nombre, tam, orientacion) {
 		this.estado = "tocado";
 		this.disparos++;
 		tablero.marcarEstado(this.estado, x, y);
+		tablero.ponerAgua(x,y);
 		console.log("Tocado");
 		if (this.comprobar(tablero)) {
 			this.estado = "hundido";
