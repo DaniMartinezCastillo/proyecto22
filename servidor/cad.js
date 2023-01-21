@@ -5,6 +5,7 @@ var ObjectID = require("mongodb").ObjectID;
 function Cad() {
 
     this.logs = undefined;
+    this.usuarios = undefined;
 
     this.insertarLog = function (log, callback) {
         insertar(this.logs, log, callback);
@@ -50,20 +51,33 @@ function Cad() {
 
     this.conectar = function () {
         let cad = this;
-        mongo.connect("mongodb+srv://batalla:clavebatalla@cluster0.9e2xf74.mongodb.net/?retryWrites=true&w=majority", { useUnifiedTopology: true }, function (err, database) {
+        mongo.connect("mongodb+srv://admin:admin@cluster0.zqzreoh.mongodb.net/?retryWrites=true&w=majority", { useUnifiedTopology: true }, function (err, database) {
+
             if (!err) {
+                //Poner mi nombre en vez de batalla
                 console.log("Conectado a MongoDB Atlas")
                 database.db("batalla").collection("logs", function (err, col) {
                     if (err) {
-                        console.log("No se puede conectar")
+                        console.log("No se puede conectar a la coleccion")
                     } else {
                         console.log("Tenemos la coleccion de logs")
-                        cad.log = col;
+                        cad.logs = col;
                     }
                 });
+
+                database.db("batalla").collection("usuarios", function (err, col) {
+                    if (err) {
+                        console.log("No se puede conectar a los usuarios")
+                    } else {
+                        console.log("Tenemos la coleccion de usuarios")
+                        cad.usuarios = col;
+                    }
+                });
+
             } else {
                 console.log("No se puede conectar con MongoDB Atlas")
             }
+
         });
     }
 

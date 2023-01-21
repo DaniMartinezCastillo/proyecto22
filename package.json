@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "node index.js false",
-    "test": "./node_modules/.bin/jasmine-node servidor"
+    "test": "node_modules\\.bin\\jasmine-node servidor"
   },
   "repository": {
     "type": "git",

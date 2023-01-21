@@ -54,6 +54,13 @@ function Juego(test) {
 	this.obtenerUsuario = function (nick) {
 		return this.usuarios[nick];
 	}
+	this.obtenerUsuarios = function () {
+		let lista = [];
+		for (let key in this.usuarios) {
+			lista.push({ "nick": this.usuarios[key].nick, "user": key });
+		}
+		return lista;
+	}
 	this.crearPartida = function (usr) {
 		let codigo = Date.now();
 		console.log("Usuario " + usr.nick + " crea partida " + codigo);
@@ -255,6 +262,9 @@ function Partida(codigo, usr) {
 			}
 		}
 		return false;
+	}
+	this.esInicial = function () {
+		return this.fase.nombre == "inicial";
 	}
 	this.esJugando = function () {
 		return this.fase.nombre == "jugando";
@@ -464,6 +474,12 @@ function Horizontal() {
 		}
 		return true;
 	}
+	this.esHorizontal = function(){
+		return true;
+	}
+	this.esVertical = function(){
+		return false;
+	}
 }
 
 function Vertical() {
@@ -495,6 +511,12 @@ function Vertical() {
 				return false;
 			}
 		}
+		return true;
+	}
+	this.esHorizontal = function(){
+		return false;
+	}
+	this.esVertical = function(){
 		return true;
 	}
 }
